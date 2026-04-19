@@ -1,10 +1,20 @@
 import os
 import requests
+import socket
+import urllib3.util.connection as urllib3_cn
 from flask import Flask, Response, request, jsonify
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# --- AWS IPv6 FIX ---
+# AWS datacenters me by default IPv6 network enable nahi hota, 
+# isliye Google stream connect hone se pehle [Errno 101] mardeta hai 
+def allowed_gai_family():
+    return socket.AF_INET
+urllib3_cn.allowed_gai_family = allowed_gai_family
+# --------------------
 
 app = Flask(__name__)
 
