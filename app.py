@@ -46,9 +46,8 @@ def play_stream(token):
     url = data.get("u")
     stored_headers = data.get("h", {})
     
-    req_headers = {}
-    if 'User-Agent' in stored_headers: 
-        req_headers['User-Agent'] = stored_headers['User-Agent']
+    req_headers = stored_headers.copy()
+    
     
     range_header = request.headers.get('Range', None)
     if range_header:
